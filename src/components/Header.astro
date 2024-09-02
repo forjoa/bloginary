@@ -1,0 +1,117 @@
+---
+import Hamburguer from '@/assets/Hamburguer.astro'
+import Notebook from '@/assets/Notebook.astro'
+import X from '@/assets/X.astro'
+
+const pathname = new URL(Astro.request.url).pathname
+
+const urls = ['/', '/blogs', '/contact']
+---
+
+<header
+  class='bg-zinc-100 m-8 p-6 rounded-lg [grid-area:header] flex justify-between items-center relative'
+>
+  <div class='flex gap-2 items-center'>
+    <Notebook />
+    <h4 class='text-xl font-bold'>Bloginary</h4>
+  </div>
+
+  <!-- hamburger menu button -->
+  <button
+    id='menu-toggle'
+    class='lg:hidden p-2 focus:outline-none'
+    aria-label='Open menu'
+  >
+    <Hamburguer />
+  </button>
+
+  <!-- navigation menu for large screens -->
+  <nav class='hidden lg:flex justify-center items-center'>
+    <ul class='flex gap-4'>
+      {
+        urls.map((href) => (
+          <li>
+            <a
+              href={href}
+              class={
+                pathname === href
+                  ? 'underline underline-offset-4 decoration-wavy decoration'
+                  : ''
+              }
+            >
+              {href === '/'
+                ? 'Home'
+                : href.slice(1).charAt(0).toUpperCase() + href.slice(2)}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <!-- slide menu for small screens -->
+  <div
+    id='menu-slide'
+    class='fixed top-0 right-0 h-full bg-zinc-100 p-6 shadow-lg menu-slide w-1/2 lg:hidden'
+  >
+    <button
+      id='menu-close'
+      class='absolute top-4 right-4 p-2 focus:outline-none'
+      aria-label='Close menu'
+    >
+      <X />
+    </button>
+    <nav class='flex flex-col gap-4 mt-12'>
+      {
+        urls.map((href) => (
+          <a
+            href={href}
+            class={
+              pathname === href
+                ? 'underline underline-offset-4 decoration-wavy decoration'
+                : ''
+            }
+          >
+            {href === '/'
+              ? 'Home'
+              : href.slice(1).charAt(0).toUpperCase() + href.slice(2)}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+
+  <style>
+    .menu-slide {
+      transition: transform 0.3s ease-in-out;
+      transform: translateX(100%);
+    }
+    .menu-slide.open {
+      transform: translateX(0);
+    }
+  </style>
+
+  <script is:inline>
+    function setupMenuListeners() {
+      const menuToggle = document.getElementById('menu-toggle')
+      const menuSlide = document.getElementById('menu-slide')
+      const menuClose = document.getElementById('menu-close')
+
+      if (menuToggle && menuSlide && menuClose) {
+        menuToggle.addEventListener('click', () => {
+          menuSlide.classList.add('open')
+        })
+
+        menuClose.addEventListener('click', () => {
+          menuSlide.classList.remove('open')
+        })
+      }
+    }
+
+    setupMenuListeners()
+
+    document.addEventListener('DOMContentLoaded', setupMenuListeners)
+
+    document.addEventListener('astro:page-load', setupMenuListeners)
+  </script>
+</header>

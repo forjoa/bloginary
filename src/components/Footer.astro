@@ -1,7 +1,12 @@
 ---
+import Copyright from '@/assets/Copyright.astro'
 
+const year = new Date().getFullYear()
 ---
 
-<footer class='bg-zinc-100 [grid-area:footer]'>
-    this is my footer
+<footer class='bg-zinc-100 [grid-area:footer] py-8 px-14'>
+  <section class='flex gap-1 text-zinc-400 items-center'>
+    <Copyright />
+    {year}. Bloginary. Make with love ❤️
+  </section>
 </footer>

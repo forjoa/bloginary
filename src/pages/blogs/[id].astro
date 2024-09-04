@@ -1,0 +1,14 @@
+---
+import Main from '@/components/ui/Main.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = false
+
+const { id } = Astro.params
+---
+
+<Layout title='Blog information'>
+  <Main>
+    blog id: {id}
+  </Main>
+</Layout>

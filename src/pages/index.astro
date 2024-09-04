@@ -1,6 +1,40 @@
 ---
 import Main from '@/components/ui/Main.astro'
 import Layout from '../layouts/Layout.astro'
+import SummaryCard from '@/assets/SummaryCard.astro'
+
+const summaries = [
+  {
+    id: 'c68a7b1a-2d20-46a8-986f-ac24bd3f8fc4',
+    title: 'Mi primer blog!',
+    summary:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde cum rerum incidunt, iste nisi mollitia. Veniam ex doloribus sint ratione odio nisi officiis et quo, voluptate unde ducimus pariatur aperiam.',
+  },
+  {
+    id: 'eee47047-5d34-4776-a3e5-1576735a9adc',
+    title: 'Mi segundo blog!',
+    summary:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde cum rerum incidunt, iste nisi mollitia. Veniam ex doloribus sint ratione odio nisi officiis et quo, voluptate unde ducimus pariatur aperiam.',
+  },
+  {
+    id: '8d69b14d-e657-44bf-a175-ac431848f106',
+    title: 'Mi tercero blog!',
+    summary:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde cum rerum incidunt, iste nisi mollitia. Veniam ex doloribus sint ratione odio nisi officiis et quo, voluptate unde ducimus pariatur aperiam.',
+  },
+  {
+    id: '635023db-b219-4062-8d39-7f3058e8b765',
+    title: 'Mi cuarto blog!',
+    summary:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde cum rerum incidunt, iste nisi mollitia. Veniam ex doloribus sint ratione odio nisi officiis et quo, voluptate unde ducimus pariatur aperiam.',
+  },
+  {
+    id: 'b6d8e05b-e5c1-4add-9b17-b54abbc5ee44',
+    title: 'Mi quinto blog!',
+    summary:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde cum rerum incidunt, iste nisi mollitia. Veniam ex doloribus sint ratione odio nisi officiis et quo, voluptate unde ducimus pariatur aperiam.',
+  },
+]
 ---
 
 <Layout title="Bloginary | Joaquin's blog">
@@ -15,6 +49,33 @@ import Layout from '../layouts/Layout.astro'
           >{'me'.toUpperCase()}</span
         >
       </h1>
+    </div>
+    <div class='relative flex overflow-x-hidden w-full'>
+      <div class='py-12 animate-marquee whitespace-nowrap flex gap-4 mr-4'>
+        {
+          summaries.map((summary) => (
+            <SummaryCard
+              id={summary.id}
+              title={summary.title}
+              summary={summary.summary}
+            />
+          ))
+        }
+      </div>
+
+      <div
+        class='absolute top-0 py-12 animate-marquee2 whitespace-nowrap flex gap-4 ml-4'
+      >
+        {
+          summaries.map((summary) => (
+            <SummaryCard
+              id={summary.id}
+              title={summary.title}
+              summary={summary.summary}
+            />
+          ))
+        }
+      </div>
     </div>
   </Main>
 </Layout>

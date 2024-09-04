@@ -1,0 +1,12 @@
+---
+import Main from '@/components/ui/Main.astro'
+import Layout from '@/layouts/Layout.astro'
+import Board from '@/components/Board.tsx'
+
+---
+
+<Layout title='Upload new blog'>
+  <Main >
+    <Board client:only />
+  </Main>
+</Layout>

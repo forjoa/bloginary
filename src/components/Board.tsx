@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from 'react'
 import { useEditor, EditorContent, Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Bold from '@tiptap/extension-bold'
@@ -8,9 +14,17 @@ import Image from '@tiptap/extension-image'
 interface MenuBarProps {
   editor: Editor
   submit: () => void
+  category: number
+  setCategory: Dispatch<SetStateAction<number>>
 }
 
-function MenuBar({ editor, submit }: MenuBarProps) {
+interface CategoryI {
+  id?: number
+  name: string
+}
+
+function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
+  const [categories, setCategories] = useState<CategoryI[]>()
   if (!editor) {
     return null
   }
@@ -22,6 +36,16 @@ function MenuBar({ editor, submit }: MenuBarProps) {
       editor.chain().focus().setImage({ src: url }).run()
     }
   }, [editor])
+
+  useEffect(() => {
+    const getCategories = () => {
+      fetch('/api/getCategories')
+        .then((res) => res.json())
+        .then((data) => setCategories(data.result))
+    }
+
+    getCategories()
+  }, [])
 
   if (!editor) {
     return null
@@ -53,7 +77,18 @@ function MenuBar({ editor, submit }: MenuBarProps) {
           Imagen
         </button>
       </div>
-      <div className='flex mb-4'>
+      <div className='flex mb-4 gap-4'>
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value as unknown as number)}
+        >
+          <option value='0'>Selecciona una opción</option>
+          {categories?.map((cat, index) => (
+            <option key={index} value={cat.id}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
         <button
           onClick={submit}
           className='flex bg-black text-white items-center justify-center rounded-lg p-2'
@@ -67,6 +102,7 @@ function MenuBar({ editor, submit }: MenuBarProps) {
 
 export default function Board() {
   const [title, setTitle] = useState('')
+  const [category, setCategory] = useState(0)
   const [content, setContent] = useState('<em>Empieza a escribir aquí...</em>')
   const [isClient, setIsClient] = useState(false)
 
@@ -74,8 +110,26 @@ export default function Board() {
     setIsClient(true)
   }, [])
 
-  // TODO: first finish endpoint
-  const onSubmit = () => {}
+  const onSubmit = () => {
+    if (category === 0 || title === '') {
+      alert('Completa todos los campos')
+    } else {
+      fetch('/api/uploadPost', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ category, title, content }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.result.rowsAffected > 0) {
+            alert('Blog subido correctamente')
+            window.location.reload()
+          }
+        })
+    }
+  }
 
   const editor = useEditor({
     extensions: [StarterKit, Bold, Italic, Image],
@@ -92,7 +146,12 @@ export default function Board() {
 
   return (
     <div className='w-full backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'>
-      <MenuBar editor={editor} submit={onSubmit} />
+      <MenuBar
+        editor={editor}
+        submit={onSubmit}
+        category={category}
+        setCategory={setCategory}
+      />
       <input
         type='text'
         placeholder='Título'

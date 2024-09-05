@@ -52,7 +52,7 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
   }
 
   return (
-    <div className='flex justify-between'>
+    <div className='flex md:flex-row flex-col gap-2 justify-between'>
       <div className='flex md:flex-row flex-col gap-2 mb-4'>
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
@@ -77,7 +77,7 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
           Imagen
         </button>
       </div>
-      <div className='flex mb-4 gap-4'>
+      <div className='flex md:flex-row flex-col mb-4 gap-4'>
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value as unknown as number)}

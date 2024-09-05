@@ -31,8 +31,8 @@ const postsFiltered =
     postsFiltered.length > 0 ? (
       postsFiltered.map((post) => (
         <a href={`/blogs/${post.id}`}>
-          <article class='border border-gray-200 rounded-lg p-4 shadow-sm transition-all hover:shadow-lg'>
-            <h3 class='text-xl font-semibold mb-2'>{post.title}</h3>
+          <article class='flex flex-col gap-2 border border-gray-200 rounded-lg p-4 shadow-sm transition-all hover:shadow-lg'>
+            <h3 class='text-xl font-semibold'>{post.title}</h3>
             <div set:html={`${post.content.substring(0, 150)} ...`} />
             <div class='text-sm text-gray-500'>
               Creado: {formatDate(post.createdat)}

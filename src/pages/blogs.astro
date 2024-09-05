@@ -1,5 +1,51 @@
 ---
+import Main from '@/components/ui/Main.astro'
 import Layout from '@/layouts/Layout.astro'
+import ListBlogs from '@/components/ListBlogs.astro'
+import { GET } from './api/getCategories.ts'
+
+interface Category {
+  id: number
+  name: string
+}
+
+const response = await GET(Astro)
+const { result: categories } = (await response.json()) as { result: Category[] }
+
+const categoryId = Astro.url.searchParams.get('category') || '0'
 ---
 
-<Layout title="Blogs"> My blogs </Layout>
+<Layout title='Blogs'>
+  <Main>
+    <div
+      class='w-full backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'
+    >
+      <h2 class='font-bold text-2xl mb-2'>Todos mis blogs</h2>
+      <div class='w-full flex justify-end'>
+        <form method='get'>
+          <select
+            name='category'
+            class='p-2 border rounded-md cursor-pointer'
+            onchange='this.form.submit()'
+          >
+            <option value='0'>Selecciona una categoría</option>
+            {
+              categories.map((category) => (
+                <option
+                  value={category.id}
+                  selected={categoryId === category.id.toString()}
+                >
+                  {category.name}
+                </option>
+              ))
+            }
+          </select>
+        </form>
+      </div>
+
+      <div class='mt-6'>
+        <ListBlogs categoryid={categoryId} />
+      </div>
+    </div>
+  </Main>
+</Layout>

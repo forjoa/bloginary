@@ -1,6 +1,6 @@
 ---
 interface Props {
-  id: string
+  id: number
   title: string
   summary: string
 }
@@ -13,7 +13,8 @@ const { id, title, summary } = Astro.props
   class='flex flex-col w-auto backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'
 >
   <span class='text-2xl font-semibold'>{title}</span>
-  <span class='text-balance'>
-    {summary.length > 70 ? summary.slice(0, 70) + '...' : summary}
-  </span>
+  <div
+    class='text-balance'
+    set:html={summary.length > 150 ? summary.slice(0, 150) + '...' : summary}
+  />
 </a>

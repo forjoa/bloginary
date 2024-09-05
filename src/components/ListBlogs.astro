@@ -1,0 +1,51 @@
+---
+import { formatDate } from '@/lib/formatDate'
+import { GET } from '@/pages/api/getPosts'
+
+interface Post {
+  id: number
+  title: string
+  content: string
+  categoryid: number
+  createdat: string
+  updatedat: string
+}
+
+export interface Props {
+  categoryid: string
+}
+
+const { categoryid } = Astro.props
+
+const response = await GET(Astro)
+const { result: posts }: { result: Post[] } = await response.json()
+
+const postsFiltered =
+  categoryid !== '0'
+    ? posts.filter((post) => post.categoryid === parseInt(categoryid))
+    : posts
+---
+
+<div class='flex flex-col gap-4'>
+  {
+    postsFiltered.length > 0 ? (
+      postsFiltered.map((post) => (
+        <a href={`/blogs/${post.id}`}>
+          <article class='border border-gray-200 rounded-lg p-4 shadow-sm transition-all hover:shadow-lg'>
+            <h3 class='text-xl font-semibold mb-2'>{post.title}</h3>
+            <div set:html={`${post.content.substring(0, 150)} ...`} />
+            <div class='text-sm text-gray-500'>
+              Creado: {formatDate(post.createdat)}
+              {post.updatedat !== post.createdat &&
+                ` | Actualizado: ${formatDate(post.updatedat)}`}
+            </div>
+          </article>
+        </a>
+      ))
+    ) : (
+      <p class='text-center text-gray-600'>
+        No hay posts disponibles para esta categoría.
+      </p>
+    )
+  }
+</div>

@@ -1,14 +1,51 @@
 ---
+import ArrowBack from '@/assets/ArrowBack.astro'
 import Main from '@/components/ui/Main.astro'
 import Layout from '@/layouts/Layout.astro'
+import { formatDate } from '@/lib/formatDate'
+import { GET } from '@/pages/api/getPosts'
 
 export const prerender = false
 
+interface Post {
+  id: number
+  title: string
+  content: string
+  categoryid: number
+  createdat: string
+  updatedat: string
+}
+
+const response = await GET(Astro)
+const { result: posts }: { result: Post[] } = await response.json()
+
 const { id } = Astro.params
+
+const post = posts.find((post) => post.id == parseInt(id as string))
 ---
 
 <Layout title='Blog information'>
   <Main>
-    blog id: {id}
+    <div
+      class='w-full backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'
+    >
+      <a href='/blogs'>
+        <article class='mb-2 hover:pl-2 transition-all cursor-pointer'>
+          <ArrowBack />
+        </article>
+      </a>
+      <header class='flex justify-between'>
+        <h1
+          class='text-2xl font-bold mb-2'
+          transition:name={`blog ${post?.id} title`}
+        >
+          {post?.title}
+        </h1>
+        <span class='text-zinc-400' transition:name={`blog ${post?.id} date`}
+          >{formatDate(post?.createdat as string)}
+        </span>
+      </header>
+      <div set:html={post?.content} transition:name={`blog ${post?.id} content`}/>
+    </div>
   </Main>
 </Layout>

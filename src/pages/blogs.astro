@@ -28,7 +28,9 @@ const categoryId = Astro.url.searchParams.get('category') || '0'
             class='p-2 border rounded-md cursor-pointer'
             onchange='this.form.submit()'
           >
-            <option value='0'>Selecciona una categoría</option>
+            <option value='0' selected={categoryId === '0'}
+              >Selecciona una categoría</option
+            >
             {
               categories.map((category) => (
                 <option
@@ -40,6 +42,12 @@ const categoryId = Astro.url.searchParams.get('category') || '0'
               ))
             }
           </select>
+          <noscript>
+            <button
+              type='submit'
+              class='ml-2 p-2 bg-blue-500 text-white rounded-md'>Filtrar</button
+            >
+          </noscript>
         </form>
       </div>
 

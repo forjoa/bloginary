@@ -34,7 +34,7 @@ const post = posts.find((post) => post.id == parseInt(id as string))
           <ArrowBack />
         </article>
       </a>
-      <header class='flex justify-between'>
+      <header class='flex md:flex-row flex-col justify-between mb-2 md:mb-0'>
         <h1
           class='text-2xl font-bold mb-2'
           transition:name={`blog ${post?.id} title`}

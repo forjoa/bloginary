@@ -1,17 +1,44 @@
 ---
+import { GET } from '@/pages/api/getCategories'
+import { colors } from '@/lib/colors'
+
+type CategoryName = keyof typeof colors.categories
+
+interface Category {
+  id: number
+  name: CategoryName
+}
+
 interface Props {
   id: number
+  categoryid: number
   title: string
   summary: string
 }
 
-const { id, title, summary } = Astro.props
+const { id, categoryid, title, summary } = Astro.props
+
+const response = await GET(Astro)
+
+const { result: categories } = (await response.json()) as { result: Category[] }
+
+const { name } = categories.find(
+  (category) => category.id === categoryid
+) as Category
+
+const categoryColor = colors.categories[name]
 ---
 
 <a
-  href={`blogs/${id}`}
-  class='flex flex-col w-auto backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'
+  href={`/blogs/${id}`}
+  class='flex flex-col w-auto backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl gap-2'
 >
+  <span
+    class='w-fit py-1 px-2 rounded'
+    style={`background-color: ${categoryColor.background}; color: ${categoryColor.font};`}
+  >
+    {name}
+  </span>
   <span class='text-2xl font-semibold'>{title}</span>
   <div
     class='text-balance'

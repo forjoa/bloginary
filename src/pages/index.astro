@@ -36,6 +36,7 @@ const { result: posts }: { result: Post[] } = await response.json()
           posts.slice(0,5).map((summary) => (
             <SummaryCard
               id={summary.id}
+              categoryid={summary.categoryid}
               title={summary.title}
               summary={summary.content}
             />
@@ -50,6 +51,7 @@ const { result: posts }: { result: Post[] } = await response.json()
           posts.slice(0,5).map((summary) => (
             <SummaryCard
               id={summary.id}
+              categoryid={summary.categoryid}
               title={summary.title}
               summary={summary.content}
             />

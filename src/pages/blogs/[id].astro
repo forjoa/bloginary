@@ -24,7 +24,7 @@ const { id } = Astro.params
 const post = posts.find((post) => post.id == parseInt(id as string))
 ---
 
-<Layout title='Blog information'>
+<Layout title={post?.title as string}>
   <Main>
     <div
       class='w-full backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'
@@ -45,7 +45,10 @@ const post = posts.find((post) => post.id == parseInt(id as string))
           >{formatDate(post?.createdat as string)}
         </span>
       </header>
-      <div set:html={post?.content} transition:name={`blog ${post?.id} content`}/>
+      <div
+        set:html={post?.content}
+        transition:name={`blog ${post?.id} content`}
+      />
     </div>
   </Main>
 </Layout>

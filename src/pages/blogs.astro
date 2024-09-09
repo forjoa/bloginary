@@ -12,7 +12,7 @@ interface Category {
 const response = await GET(Astro)
 const { result: categories } = (await response.json()) as { result: Category[] }
 
-const categoryId = Astro.url.searchParams.get('category') || '0'
+const categoryId = Astro.request.url.split('category=')[1]
 ---
 
 <Layout title='Blogs'>

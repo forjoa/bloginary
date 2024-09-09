@@ -12,7 +12,7 @@ interface Category {
 const response = await GET(Astro)
 const { result: categories } = (await response.json()) as { result: Category[] }
 
-const categoryId = Astro.request.url.split('category=')[1]
+const categoryId = Astro.request.url.split('category=')[1] || '0'
 ---
 
 <Layout title='Blogs'>
@@ -22,7 +22,7 @@ const categoryId = Astro.request.url.split('category=')[1]
     >
       <h2 class='font-bold text-2xl mb-2'>Todos mis blogs</h2>
       <div class='w-full flex justify-end'>
-        <form method='get' data-astro-reload>
+        <form method='get'>
           <select
             name='category'
             class='p-2 border rounded-md cursor-pointer'
@@ -42,12 +42,6 @@ const categoryId = Astro.request.url.split('category=')[1]
               ))
             }
           </select>
-          <noscript>
-            <button
-              type='submit'
-              class='ml-2 p-2 bg-blue-500 text-white rounded-md'>Filtrar</button
-            >
-          </noscript>
         </form>
       </div>
 

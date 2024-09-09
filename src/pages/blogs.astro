@@ -13,8 +13,6 @@ const response = await GET(Astro)
 const { result: categories } = (await response.json()) as { result: Category[] }
 
 const categoryId = Astro.request.url.split('category=')[1] || '0'
-
-console.log(categoryId)
 ---
 
 <Layout title='Blogs'>

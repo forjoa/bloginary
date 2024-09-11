@@ -2,11 +2,15 @@
 import Main from '@/components/ui/Main.astro'
 import Layout from '@/layouts/Layout.astro'
 import Board from '@/components/Board.tsx'
+import Login from '@/components/Login'
 
+let flag = false
+if (Astro.cookies.has('userbloginary')) {
+}
 ---
 
 <Layout title='Upload new blog'>
-  <Main >
-    <Board client:only />
+  <Main>
+    {flag ? <Board client:only /> : <Login client:only />}
   </Main>
 </Layout>

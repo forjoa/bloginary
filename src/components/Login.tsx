@@ -5,7 +5,6 @@ export default function Login() {
   const [password, setPassword] = useState<string>()
   const [success, setSuccess] = useState<boolean>()
 
-  // todo: use login endpoint
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const response = fetch('/api/login', {

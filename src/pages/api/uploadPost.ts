@@ -1,6 +1,7 @@
 import { db } from '@/lib/db'
 import type { APIRoute } from 'astro'
 
+// todo: add author id
 export const POST: APIRoute = async ({ request }) => {
   const body = await request.json()
 

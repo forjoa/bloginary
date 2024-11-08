@@ -8,8 +8,13 @@ export default function Login() {
   // todo: use login endpoint
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    console.log(email, password)
+    const response = fetch('/api/login', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    })
   }
   return (
     <div className='w-full backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'>

@@ -2,7 +2,6 @@ import type { APIRoute } from 'astro'
 import { db } from '@/lib/db'
 import bcrypt from 'bcrypt'
 
-// todo: login endpoint
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const body = await request.json()
   const { email, password } = body

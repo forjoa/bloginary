@@ -2,6 +2,7 @@ import {
   useCallback,
   useEffect,
   useState,
+  type ChangeEvent,
   type Dispatch,
   type SetStateAction,
 } from 'react'
@@ -25,15 +26,41 @@ interface CategoryI {
 
 function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
   const [categories, setCategories] = useState<CategoryI[]>()
+  const [image, setImage] = useState<string>()
   if (!editor) {
     return null
   }
 
-  const addImage = useCallback(() => {
-    const url = window.prompt('Introduce el link de la imagen')
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files
 
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run()
+    if (!files) return
+
+    const file = Array.from(files)[0]
+
+    if (!file) return
+
+    const data = new FormData()
+    data.append('file', file)
+    data.append('upload_preset', 'bondsimages')
+
+    fetch(import.meta.env.PUBLIC_CLOUDINARY_ENDPOINT, {
+      method: 'POST',
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setImage(data.secure_url)
+        addImage()
+      })
+
+    // TODO: image uploading correctly but not shown on the editor
+  }
+
+  const addImage = useCallback(() => {
+    if (image) {
+      editor.chain().focus().setImage({ src: image }).run()
+      setImage(undefined)
     }
   }, [editor])
 
@@ -70,14 +97,12 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
         >
           Italic
         </button>
-        <button
-          onClick={addImage}
-          className='flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1'
-        >
+        <label className='flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 cursor-pointer'>
+          <input type='file' onChange={handleImageChange} className='hidden' />
           Imagen
-        </button>
+        </label>
       </div>
-      <div className='flex md:flex-row flex-col mb-4 gap-4'>
+      <div className='flex md:flex-row flex-col mb-4 gap-4 cursor-pointer'>
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value as unknown as number)}

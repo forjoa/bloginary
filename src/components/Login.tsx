@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { toast, Toaster } from 'sonner'
 
 export default function Login() {
   const [email, setEmail] = useState<string>()
@@ -7,16 +8,25 @@ export default function Login() {
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const response = fetch('/api/login', {
+    fetch('/api/login', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
     })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.success) {
+          toast.error(data.message)
+        } else {
+          window.location.reload()
+        }
+      })
   }
   return (
     <div className='w-full backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'>
+      <Toaster position='top-center' />
       <form className='flex flex-col gap-2' onSubmit={submit}>
         <h2 className='font-bold text-xl'>Login</h2>
         <span className='text-zinc-500'>

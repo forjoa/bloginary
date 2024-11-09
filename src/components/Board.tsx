@@ -11,6 +11,7 @@ import StarterKit from '@tiptap/starter-kit'
 import Bold from '@tiptap/extension-bold'
 import Italic from '@tiptap/extension-italic'
 import Image from '@tiptap/extension-image'
+import { toast, Toaster } from 'sonner'
 
 interface MenuBarProps {
   editor: Editor
@@ -26,7 +27,7 @@ interface CategoryI {
 
 function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
   const [categories, setCategories] = useState<CategoryI[]>()
-  const [image, setImage] = useState<string>()
+
   if (!editor) {
     return null
   }
@@ -50,19 +51,19 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
     })
       .then((res) => res.json())
       .then((data) => {
-        setImage(data.secure_url)
-        addImage()
+        addImage(data.secure_url)
       })
-
-    // TODO: image uploading correctly but not shown on the editor
+      .finally(() => (event.target.value = ''))
   }
 
-  const addImage = useCallback(() => {
-    if (image) {
-      editor.chain().focus().setImage({ src: image }).run()
-      setImage(undefined)
-    }
-  }, [editor])
+  const addImage = useCallback(
+    (image: string) => {
+      if (image) {
+        editor.chain().focus().setImage({ src: image }).run()
+      }
+    },
+    [editor]
+  )
 
   useEffect(() => {
     const getCategories = () => {
@@ -149,7 +150,7 @@ export default function Board() {
         .then((res) => res.json())
         .then((data) => {
           if (data.result.rowsAffected > 0) {
-            alert('Blog subido correctamente')
+            toast.success('Blog subido correctamente')
             window.location.reload()
           }
         })
@@ -171,6 +172,7 @@ export default function Board() {
 
   return (
     <div className='w-full backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'>
+      <Toaster position='top-center' />
       <MenuBar
         editor={editor}
         submit={onSubmit}

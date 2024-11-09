@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro'
 import { db } from '@/lib/db'
 import bcrypt from 'bcrypt'
 
-export const POST: APIRoute = async ({ request, cookies, redirect }) => {
+export const POST: APIRoute = async ({ request, cookies }) => {
   const body = await request.json()
   const { email, password } = body
 
@@ -13,14 +13,15 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
 
   const user = result.rows[0]
 
-  if (!user) return redirect('/subir')
+  if (!user) return Response.json({ success: false, message: 'User not found' })
 
-  if (!(await bcrypt.compare(password, user.password as string))) return redirect('/subir')
+  if (!(await bcrypt.compare(password, user.password as string)))
+    return Response.json({ success: false, message: 'Wrong password' })
 
   cookies.set('userbloginary', user, {
     path: '/',
     httpOnly: true,
   })
 
-  return redirect('/subir')
+  return Response.json({ success: true })
 }

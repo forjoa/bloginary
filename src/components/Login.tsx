@@ -4,7 +4,6 @@ import { toast, Toaster } from 'sonner'
 export default function Login() {
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
-  const [success, setSuccess] = useState<boolean>()
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()

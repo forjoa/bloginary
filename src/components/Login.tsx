@@ -46,7 +46,7 @@ export default function Login() {
         <div className='w-full flex justify-end'>
           <input
             type='submit'
-            className='flex bg-black text-white items-center justify-center rounded-lg py-2 px-4'
+            className='flex bg-black text-white items-center justify-center rounded-lg py-2 px-4 cursor-pointer transition-all hover:opacity-50'
             value='Login'
           ></input>
         </div>

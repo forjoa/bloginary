@@ -91,7 +91,7 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
         </select>
         <button
           onClick={submit}
-          className='flex bg-black text-white items-center justify-center rounded-lg p-2'
+          className='flex bg-black text-white items-center justify-center rounded-lg p-2 transition-all hover:opacity-50'
         >
           Subir nuevo blog
         </button>

@@ -12,6 +12,8 @@ interface Post {
   title: string
   content: string
   categoryid: number
+  name: string
+  lastname: string
   createdat: string
   updatedat: string
 }
@@ -40,6 +42,11 @@ const post = posts.find((post) => post.id == parseInt(id as string))
           transition:name={`blog ${post?.id} title`}
         >
           {post?.title}
+          <span
+            class='text-zinc-500 text-sm font-light'
+            transition:name={`blog ${post?.id} author`}
+            >by {post?.name} {post?.lastname}</span
+          >
         </h1>
         <span class='text-zinc-400' transition:name={`blog ${post?.id} date`}
           >{formatDate(post?.createdat as string)}

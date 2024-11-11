@@ -34,6 +34,7 @@ export default function Login() {
         <label htmlFor='email' className='flex flex-col gap-1'>
           Email
           <input
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             type='email'
             id='email'
@@ -45,6 +46,7 @@ export default function Login() {
         <label htmlFor='password' className='flex flex-col gap-1'>
           Password
           <input
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             id='password'
             type='password'

@@ -15,6 +15,7 @@
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/vercel": "^7.8.0",
     "@libsql/client": "^0.10.0",
+    "@tiptap/extension-code-block": "^2.9.1",
     "@tiptap/extension-image": "^2.6.6",
     "@tiptap/react": "^2.6.6",
     "@tiptap/starter-kit": "^2.6.6",

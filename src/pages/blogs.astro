@@ -18,9 +18,12 @@ const categoryId = Astro.request.url.split('category=')[1] || '0'
 <Layout title='Blogs'>
   <Main>
     <div
-      class='w-full backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'
+      class='w-full backdrop-blur-lg border border-zinc-200 p-8 rounded-lg shadow-xl'
     >
       <h2 class='font-bold text-2xl mb-2'>Blogs principales</h2>
+      <div class='w-full flex border-b border-b-zinc-200 my-4'>
+        <input type='text' name='title' placeholder="Escribe el título del blog" class="pb-2" />
+      </div>
       <div class='w-full flex justify-end'>
         <form method='get'>
           <select

@@ -11,6 +11,7 @@ import StarterKit from '@tiptap/starter-kit'
 import Bold from '@tiptap/extension-bold'
 import Italic from '@tiptap/extension-italic'
 import Image from '@tiptap/extension-image'
+import CodeBlock from '@tiptap/extension-code-block'
 import { toast, Toaster } from 'sonner'
 
 interface MenuBarProps {
@@ -98,6 +99,14 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
         >
           Italic
         </button>
+        <button
+          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+          className={`flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 ${
+            editor.isActive('codeBlock') ? 'bg-black text-white' : ''
+          }`}
+        >
+          Code
+        </button>
         <label className='flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 cursor-pointer'>
           <input type='file' onChange={handleImageChange} className='hidden' />
           Imagen
@@ -158,7 +167,7 @@ export default function Board() {
   }
 
   const editor = useEditor({
-    extensions: [StarterKit, Bold, Italic, Image],
+    extensions: [StarterKit, Bold, Italic, Image, CodeBlock],
     content: content,
     onUpdate: ({ editor }) => {
       const contentEditor = editor.getHTML()

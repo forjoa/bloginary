@@ -3,6 +3,7 @@ import Main from '@/components/ui/Main.astro'
 import Layout from '@/layouts/Layout.astro'
 import ListBlogs from '@/components/ListBlogs.astro'
 import { GET } from './api/getCategories.ts'
+import Search from '@/assets/Search.astro'
 
 interface Category {
   id: number
@@ -21,9 +22,16 @@ const categoryId = Astro.request.url.split('category=')[1] || '0'
       class='w-full backdrop-blur-lg border border-zinc-200 p-8 rounded-lg shadow-xl'
     >
       <h2 class='font-bold text-2xl mb-2'>Blogs principales</h2>
-      <div class='w-full flex border-b border-b-zinc-200 my-4'>
-        <input type='text' name='title' placeholder="Escribe el título del blog" class="pb-2" />
-      </div>
+      <form method="get" class='w-full flex justify-between border-b border-b-zinc-200 my-4'>
+        <input
+          type='text'
+          name='searching'
+          placeholder='Escribe el título del blog'
+          onchange="this.form.submit()"
+          class='pb-2'
+        />
+        <Search />
+      </form>
       <div class='w-full flex justify-end'>
         <form method='get'>
           <select

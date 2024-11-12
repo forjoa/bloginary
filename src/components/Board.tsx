@@ -13,6 +13,7 @@ import Italic from '@tiptap/extension-italic'
 import Image from '@tiptap/extension-image'
 import CodeBlock from '@tiptap/extension-code-block'
 import { toast, Toaster } from 'sonner'
+import ImageIcon from '../assets/Image.tsx'
 
 interface MenuBarProps {
   editor: Editor
@@ -109,7 +110,7 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
         </button>
         <label className='flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 cursor-pointer'>
           <input type='file' onChange={handleImageChange} className='hidden' />
-          Imagen
+          <ImageIcon />
         </label>
       </div>
       <div className='flex md:flex-row flex-col mb-4 gap-4 cursor-pointer'>

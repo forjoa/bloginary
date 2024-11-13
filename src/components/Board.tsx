@@ -6,6 +6,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from 'react'
+
 import { useEditor, EditorContent, Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Bold from '@tiptap/extension-bold'
@@ -15,8 +16,10 @@ import CodeBlock from '@tiptap/extension-code-block'
 import Youtube from '@tiptap/extension-youtube'
 
 import { toast, Toaster } from 'sonner'
+
 import ImageIcon from '../assets/Image.tsx'
 import YoutubeIcon from '@/assets/Youtube.tsx'
+import BoldIcon from '@/assets/Bold.tsx'
 
 interface MenuBarProps {
   editor: Editor
@@ -105,7 +108,7 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
             editor.isActive('bold') ? 'bg-black text-white' : ''
           }`}
         >
-          Bold
+          <BoldIcon />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleItalic().run()}

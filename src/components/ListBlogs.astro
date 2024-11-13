@@ -41,7 +41,7 @@ const postsFiltered =
               {post.title}
             </h3>
             <div
-              set:html={`${post.content.substring(0, 150)}...`}
+              set:html={post.content.length > 150 ? `${post.content.substring(0, 150)}...` : post.content}
               transition:name={`blog ${post?.id} content`}
             />
             <div class='text-sm text-gray-500 flex justify-between'>

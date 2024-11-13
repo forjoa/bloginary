@@ -46,11 +46,9 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
-
     if (!files) return
 
     const file = Array.from(files)[0]
-
     if (!file) return
 
     const data = new FormData()
@@ -79,7 +77,6 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
 
   const addYoutube = () => {
     const url = prompt('Ingresa la URL del video:')
-
     if (url) {
       editor.commands.setYoutubeVideo({
         src: url,
@@ -95,77 +92,69 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
         .then((res) => res.json())
         .then((data) => setCategories(data.result))
     }
-
     getCategories()
   }, [])
 
-  if (!editor) {
-    return null
-  }
-
   return (
-    <div className='flex md:flex-row flex-col gap-2 justify-between'>
-      <div className='flex md:flex-row flex-col gap-2 mb-4'>
-        <button
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          className={`flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 ${
-            editor.isActive('bold') ? 'bg-black text-white' : ''
-          }`}
-        >
-          <BoldIcon />
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-          className={`flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 ${
-            editor.isActive('italic') ? 'bg-black text-white' : ''
-          }`}
-        >
-          <ItalicIcon />
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleUnderline().run()}
-          className={`flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 ${
-            editor.isActive('underline') ? 'bg-black text-white' : ''
-          }`}
-        >
-          <UnderlineIcon />
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          className={`flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 ${
-            editor.isActive('codeBlock') ? 'bg-black text-white' : ''
-          }`}
-        >
-          <CodeIcon />
-        </button>
-        <label className='flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 cursor-pointer'>
-          <input type='file' onChange={handleImageChange} className='hidden' />
-          <ImageIcon />
-        </label>
-        <label className='flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 cursor-pointer'>
-          <button onClick={addYoutube} className='hidden' />
-          <YoutubeIcon />
-        </label>
-      </div>
-      <div className='flex md:flex-row flex-col mb-4 gap-4 cursor-pointer'>
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value as unknown as number)}
-        >
-          <option value='0'>Selecciona una opción</option>
-          {categories?.map((cat, index) => (
-            <option key={index} value={cat.id}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
-        <button
-          onClick={submit}
-          className='flex bg-black text-white items-center justify-center rounded-lg p-2 transition-all hover:opacity-50'
-        >
-          Subir nuevo blog
-        </button>
-      </div>
+    <div className='sticky top-10 w-full bg-white z-10 flex flex-wrap gap-2 mb-4 p-2 border rounded-lg border-zinc-200'>
+      <button
+        onClick={() => editor.chain().focus().toggleBold().run()}
+        className={`flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 ${
+          editor.isActive('bold') ? 'bg-black text-white' : ''
+        }`}
+      >
+        <BoldIcon />
+      </button>
+      <button
+        onClick={() => editor.chain().focus().toggleItalic().run()}
+        className={`flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 ${
+          editor.isActive('italic') ? 'bg-black text-white' : ''
+        }`}
+      >
+        <ItalicIcon />
+      </button>
+      <button
+        onClick={() => editor.chain().focus().toggleUnderline().run()}
+        className={`flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 ${
+          editor.isActive('underline') ? 'bg-black text-white' : ''
+        }`}
+      >
+        <UnderlineIcon />
+      </button>
+      <button
+        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+        className={`flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 ${
+          editor.isActive('codeBlock') ? 'bg-black text-white' : ''
+        }`}
+      >
+        <CodeIcon />
+      </button>
+      <label className='flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 cursor-pointer'>
+        <input type='file' onChange={handleImageChange} className='hidden' />
+        <ImageIcon />
+      </label>
+      <label className='flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 cursor-pointer'>
+        <button onClick={addYoutube} className='hidden' />
+        <YoutubeIcon />
+      </label>
+      <select
+        value={category}
+        onChange={(e) => setCategory(parseInt(e.target.value))}
+        className='border border-zinc-200 rounded-lg p-1'
+      >
+        <option value='0'>Selecciona una categoría</option>
+        {categories?.map((cat, index) => (
+          <option key={index} value={cat.id}>
+            {cat.name}
+          </option>
+        ))}
+      </select>
+      <button
+        onClick={submit}
+        className='flex bg-black text-white items-center justify-center rounded-lg py-2 px-4 transition-all hover:opacity-50'
+      >
+        Subir blog
+      </button>
     </div>
   )
 }

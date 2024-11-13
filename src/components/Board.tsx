@@ -12,8 +12,11 @@ import Bold from '@tiptap/extension-bold'
 import Italic from '@tiptap/extension-italic'
 import Image from '@tiptap/extension-image'
 import CodeBlock from '@tiptap/extension-code-block'
+import Youtube from '@tiptap/extension-youtube'
+
 import { toast, Toaster } from 'sonner'
 import ImageIcon from '../assets/Image.tsx'
+import YoutubeIcon from '@/assets/Youtube.tsx'
 
 interface MenuBarProps {
   editor: Editor
@@ -67,6 +70,18 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
     [editor]
   )
 
+  const addYoutube = () => {
+    const url = prompt('Ingresa la URL del video:')
+
+    if (url) {
+      editor.commands.setYoutubeVideo({
+        src: url,
+        width: 640,
+        height: 480,
+      })
+    }
+  }
+
   useEffect(() => {
     const getCategories = () => {
       fetch('/api/getCategories')
@@ -111,6 +126,10 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
         <label className='flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 cursor-pointer'>
           <input type='file' onChange={handleImageChange} className='hidden' />
           <ImageIcon />
+        </label>
+        <label className='flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 cursor-pointer'>
+          <button onClick={addYoutube} className='hidden' />
+          <YoutubeIcon />
         </label>
       </div>
       <div className='flex md:flex-row flex-col mb-4 gap-4 cursor-pointer'>
@@ -168,7 +187,14 @@ export default function Board() {
   }
 
   const editor = useEditor({
-    extensions: [StarterKit, Bold, Italic, Image, CodeBlock],
+    extensions: [
+      StarterKit,
+      Bold,
+      Italic,
+      Image,
+      CodeBlock,
+      Youtube.configure({ controls: false, nocookie: true }),
+    ],
     content: content,
     onUpdate: ({ editor }) => {
       const contentEditor = editor.getHTML()

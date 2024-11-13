@@ -26,7 +26,7 @@ const { id } = Astro.params
 const post = posts.find((post) => post.id == parseInt(id as string))
 ---
 
-<Layout title={post?.title as string}>
+<Layout title={`Bloginary | ${post?.title as string}`}>
   <Main>
     <div
       class='w-full backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'

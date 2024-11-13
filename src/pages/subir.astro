@@ -10,7 +10,7 @@ if (Astro.cookies.has('userbloginary')) {
 }
 ---
 
-<Layout title='Upload new blog'>
+<Layout title='Bloginary | Upload new blog'>
   <Main>
     {flag ? <Board client:only /> : <Login client:only />}
   </Main>

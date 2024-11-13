@@ -16,7 +16,7 @@ const { result: categories } = (await response.json()) as { result: Category[] }
 const categoryId = Astro.request.url.split('category=')[1] || '0'
 ---
 
-<Layout title='Blogs'>
+<Layout title='Bloginary | All blogs'>
   <Main>
     <div
       class='w-full backdrop-blur-lg border border-zinc-200 p-8 rounded-lg shadow-xl'

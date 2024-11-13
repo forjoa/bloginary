@@ -7,10 +7,9 @@ export default function ImageIcon() {
       viewBox='0 0 24 24'
       fill='none'
       stroke='currentColor'
-      stroke-width='1.5'
-      stroke-linecap='round'
-      stroke-linejoin='round'
-      className='icon icon-tabler icons-tabler-outline icon-tabler-photo'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
     >
       <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
       <path d='M15 8h.01'></path>

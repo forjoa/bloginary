@@ -7,9 +7,9 @@ export default function ItalicIcon() {
       viewBox='0 0 24 24'
       fill='none'
       stroke='currentColor'
-      stroke-width='1.5'
-      stroke-linecap='round'
-      stroke-linejoin='round'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
     >
       <path stroke='none' d='M0 0h24v24H0z' fill='none' />
       <path d='M11 5l6 0' />

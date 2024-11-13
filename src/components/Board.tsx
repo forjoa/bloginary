@@ -20,6 +20,7 @@ import { toast, Toaster } from 'sonner'
 import ImageIcon from '../assets/Image.tsx'
 import YoutubeIcon from '@/assets/Youtube.tsx'
 import BoldIcon from '@/assets/Bold.tsx'
+import ItalicIcon from '@/assets/Italic.tsx'
 
 interface MenuBarProps {
   editor: Editor
@@ -116,7 +117,7 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
             editor.isActive('italic') ? 'bg-black text-white' : ''
           }`}
         >
-          Italic
+          <ItalicIcon />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}

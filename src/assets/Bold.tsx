@@ -1,4 +1,4 @@
-export default function Bold() {
+export default function BoldIcon() {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

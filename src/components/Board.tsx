@@ -21,6 +21,7 @@ import ImageIcon from '../assets/Image.tsx'
 import YoutubeIcon from '@/assets/Youtube.tsx'
 import BoldIcon from '@/assets/Bold.tsx'
 import ItalicIcon from '@/assets/Italic.tsx'
+import CodeIcon from '@/assets/Code.tsx'
 
 interface MenuBarProps {
   editor: Editor
@@ -125,7 +126,7 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
             editor.isActive('codeBlock') ? 'bg-black text-white' : ''
           }`}
         >
-          Code
+          <CodeIcon />
         </button>
         <label className='flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 cursor-pointer'>
           <input type='file' onChange={handleImageChange} className='hidden' />

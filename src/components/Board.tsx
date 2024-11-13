@@ -14,6 +14,7 @@ import Italic from '@tiptap/extension-italic'
 import Image from '@tiptap/extension-image'
 import CodeBlock from '@tiptap/extension-code-block'
 import Youtube from '@tiptap/extension-youtube'
+import Underline from '@tiptap/extension-underline'
 
 import { toast, Toaster } from 'sonner'
 
@@ -22,6 +23,7 @@ import YoutubeIcon from '@/assets/Youtube.tsx'
 import BoldIcon from '@/assets/Bold.tsx'
 import ItalicIcon from '@/assets/Italic.tsx'
 import CodeIcon from '@/assets/Code.tsx'
+import UnderlineIcon from '@/assets/Underline.tsx'
 
 interface MenuBarProps {
   editor: Editor
@@ -121,6 +123,14 @@ function MenuBar({ editor, submit, category, setCategory }: MenuBarProps) {
           <ItalicIcon />
         </button>
         <button
+          onClick={() => editor.chain().focus().toggleUnderline().run()}
+          className={`flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 ${
+            editor.isActive('underline') ? 'bg-black text-white' : ''
+          }`}
+        >
+          <UnderlineIcon />
+        </button>
+        <button
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}
           className={`flex gap-2 border border-zinc-200 items-center justify-center rounded-lg px-2 py-1 ${
             editor.isActive('codeBlock') ? 'bg-black text-white' : ''
@@ -198,6 +208,7 @@ export default function Board() {
       Italic,
       Image,
       CodeBlock,
+      Underline,
       Youtube.configure({ controls: false, nocookie: true }),
     ],
     content: content,

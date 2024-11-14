@@ -1,0 +1,11 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import Register from '@/components/Register.tsx'
+import Main from '@/components/ui/Main.astro'
+---
+
+<Layout title='Bloginary | Registrarse'>
+  <Main>
+    <Register client:only />
+  </Main>
+</Layout>

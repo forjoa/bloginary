@@ -88,6 +88,12 @@ export default function Register() {
             value='Sign up'
           ></input>
         </div>
+        <div className='w-full flex justify-end gap-1'>
+          Si ya tienes cuenta,
+          <a href='/subir' className='underline'>
+            inicia sesión
+          </a>
+        </div>
       </form>
     </div>
   )

@@ -61,6 +61,12 @@ export default function Login() {
             value='Login'
           ></input>
         </div>
+        <div className='w-full flex justify-end gap-1'>
+          Si aún no tienes cuenta,
+          <a href='/registro' className='underline'>
+            regístrate
+          </a>
+        </div>
       </form>
     </div>
   )

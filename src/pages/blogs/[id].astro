@@ -12,6 +12,7 @@ interface Post {
   title: string
   content: string
   categoryid: number
+  authorid: number
   name: string
   lastname: string
   createdat: string
@@ -42,11 +43,12 @@ const post = posts.find((post) => post.id == parseInt(id as string))
           transition:name={`blog ${post?.id} title`}
         >
           {post?.title}
-          <span
-            class='text-zinc-400  font-light'
+          <a
+            class='text-zinc-400 font-light cursor-pointer'
             transition:name={`blog ${post?.id} author`}
             id="author"
-            >by {post?.name} {post?.lastname}</span
+            href={`/a/${post?.authorid}`}
+            >by {post?.name} {post?.lastname}</a
           >
         </h1>
         

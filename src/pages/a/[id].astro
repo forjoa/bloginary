@@ -1,0 +1,16 @@
+---
+import Main from '@/components/ui/Main.astro'
+import Layout from '@/layouts/Layout.astro'
+
+const { id } = Astro.params
+---
+
+<Layout title={`Bloginary | ${id}`}>
+  <Main>
+    <div
+      class='w-full backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'
+    >
+      <h1>Author {id}</h1>
+    </div>
+  </Main>
+</Layout>

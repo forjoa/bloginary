@@ -2,12 +2,31 @@
 import CustomImage from '@/components/ui/CustomImage.astro'
 import Main from '@/components/ui/Main.astro'
 import Layout from '@/layouts/Layout.astro'
-
+import { GET } from '@/pages/api/getPosts'
 import { getUser } from '@/lib/getters'
+import { formatDate } from '@/lib/formatDate'
+
+interface Post {
+  id: number
+  title: string
+  content: string
+  categoryid: number
+  name: string
+  lastname: string
+  createdat: string
+  updatedat: string
+  authorid: number
+}
 
 const { id } = Astro.params
 
 const user = await getUser(id as unknown as number)
+const response = await GET(Astro)
+const { result: posts }: { result: Post[] } = await response.json()
+
+const postsFiltered = posts.filter(
+  (post) => post.authorid === parseInt(id as string)
+)
 ---
 
 <Layout title={`Bloginary | ${user.name}`}>
@@ -15,8 +34,47 @@ const user = await getUser(id as unknown as number)
     <div
       class='w-full backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'
     >
-    <CustomImage imagePath='/src/assets/nerd.jpg'/>
+      <CustomImage imagePath='/src/assets/bad_guy.jpg' />
       <h1>{user.name} {user.lastname}</h1>
+
+      <div class='flex flex-col gap-4'>
+        {
+          postsFiltered.length > 0 ? (
+            postsFiltered.map((post) => (
+              <a href={`/b/${post.id}`}>
+                <article class='flex flex-col gap-2 border border-gray-200 rounded-lg p-4 shadow-sm transition-all hover:shadow-lg'>
+                  <h3
+                    class='text-xl font-semibold'
+                    transition:name={`blog ${post?.id} title`}
+                  >
+                    {post.title}
+                  </h3>
+                  <div
+                    set:html={
+                      post.content.length > 150
+                        ? `${post.content.substring(0, 150)}...`
+                        : post.content
+                    }
+                    transition:name={`blog ${post?.id} content`}
+                  />
+                  <div class='text-sm text-gray-500 flex justify-between'>
+                    <p transition:name={`blog ${post?.id} date`}>
+                      {formatDate(post.createdat)}
+                    </p>
+                    <p transition:name={`blog ${post?.id} author`}>
+                      {post.name} {post.lastname}
+                    </p>
+                  </div>
+                </article>
+              </a>
+            ))
+          ) : (
+            <p class='text-center text-gray-600'>
+              No hay posts disponibles para esta categoría.
+            </p>
+          )
+        }
+      </div>
     </div>
   </Main>
 </Layout>

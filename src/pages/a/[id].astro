@@ -34,7 +34,7 @@ const postsFiltered = posts.filter(
     <div
       class='w-full backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'
     >
-      <CustomImage imagePath='/src/assets/bad_guy.jpg' />
+      <CustomImage imagePath={user.profilephoto} />
       <h1>{user.name} {user.lastname}</h1>
 
       <div class='flex flex-col gap-4'>

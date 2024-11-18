@@ -1,0 +1,21 @@
+---
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
+
+interface Props {
+  imagePath: string
+}
+
+const { imagePath } = Astro.props
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/*.{jpeg,jpg,png,gif}'
+)
+if (!images[imagePath])
+  throw new Error(
+    `"${imagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif}"`
+  )
+---
+
+<div class='aspect-square w-36 shadow-sm rounded-full bg-white p-4'>
+  <Image src={images[imagePath]()} alt={'altText'} class={'rounded-full'} />
+</div>

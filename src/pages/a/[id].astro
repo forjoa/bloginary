@@ -1,16 +1,22 @@
 ---
+import CustomImage from '@/components/ui/CustomImage.astro'
 import Main from '@/components/ui/Main.astro'
 import Layout from '@/layouts/Layout.astro'
 
+import { getUser } from '@/lib/getters'
+
 const { id } = Astro.params
+
+const user = await getUser(id as unknown as number)
 ---
 
-<Layout title={`Bloginary | ${id}`}>
+<Layout title={`Bloginary | ${user.name}`}>
   <Main>
     <div
       class='w-full backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'
     >
-      <h1>Author {id}</h1>
+    <CustomImage imagePath='/src/assets/nerd.jpg'/>
+      <h1>{user.name} {user.lastname}</h1>
     </div>
   </Main>
 </Layout>

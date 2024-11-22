@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 
 export const POST: APIRoute = async ({ request }) => {
   const body = await request.json()
-  const { name, lastname, email, password } = body
+  const { name, lastname, email, password, profileImage } = body
 
   const result = await db.execute({
     sql: 'SELECT * FROM author WHERE email = ?',
@@ -23,8 +23,8 @@ export const POST: APIRoute = async ({ request }) => {
   const hash = await bcrypt.hash(password, 10)
 
   await db.execute({
-    sql: 'INSERT INTO author (name, lastname, email, password) VALUES (?,?,?,?)',
-    args: [name, lastname, email, hash],
+    sql: 'INSERT INTO author (name, lastname, email, password, profilephoto) VALUES (?,?,?,?,?)',
+    args: [name, lastname, email, hash, profileImage],
   })
 
   return Response.json({

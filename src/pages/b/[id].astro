@@ -46,20 +46,21 @@ const post = posts.find((post) => post.id == parseInt(id as string))
           <a
             class='text-zinc-400 font-light cursor-pointer'
             transition:name={`blog ${post?.id} author`}
-            id="author"
-            href={`/a/${post?.authorid}`}
-            >by {post?.name} {post?.lastname}</a
+            id='author'
+            href={`/a/${post?.authorid}`}>by {post?.name} {post?.lastname}</a
           >
         </h1>
-        
       </header>
       <div
         set:html={post?.content}
         transition:name={`blog ${post?.id} content`}
+        class='flex flex-col gap-2'
       />
-      <span class='text-zinc-400 w-full flex justify-end' transition:name={`blog ${post?.id} date`}
-          >{formatDate(post?.createdat as string)}
-        </span>
+      <span
+        class='text-zinc-400 w-full flex justify-end'
+        transition:name={`blog ${post?.id} date`}
+        >{formatDate(post?.createdat as string)}
+      </span>
     </div>
   </Main>
 </Layout>
@@ -68,6 +69,6 @@ const post = posts.find((post) => post.id == parseInt(id as string))
   @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 
   #author {
-    font-family: "Caveat", cursive;
+    font-family: 'Caveat', cursive;
   }
 </style>

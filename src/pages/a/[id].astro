@@ -28,6 +28,10 @@ const { result: posts }: { result: Post[] } = await response.json()
 const postsFiltered = posts.filter(
   (post) => post.authorid === parseInt(id as string)
 )
+
+const currentUser = Astro.cookies.get('userbloginary')
+const currentUserJson = currentUser?.json()
+const currentUserId = currentUserJson?.id
 ---
 
 <Layout title={`Bloginary | ${user.name} ${user.lastname}`}>
@@ -45,7 +49,9 @@ const postsFiltered = posts.filter(
             {user.lastname}
           </h2>
         </div>
-        <form>
+        <form method='post' action='/api/follow'>
+          <input type='hidden' name='followerid' value={currentUserId} />
+          <input type='hidden' name='followedid' value={id} />
           <button
             type='submit'
             class='bg-black h-fit text-white px-4 py-2 rounded-lg flex gap-2'

@@ -32,6 +32,8 @@ const postsFiltered = posts.filter(
 const currentUser = Astro.cookies.get('userbloginary')
 const currentUserJson = currentUser?.json()
 const currentUserId = currentUserJson?.id
+
+const error = Astro.request.url.split('error=')[1] 
 ---
 
 <Layout title={`Bloginary | ${user.name} ${user.lastname}`}>
@@ -39,6 +41,7 @@ const currentUserId = currentUserJson?.id
     <div
       class='w-full backdrop-blur-lg border border-zinc-200 p-4 rounded-lg shadow-xl'
     >
+    {error && <p class='text-red-600'>{decodeURIComponent(error)}</p>}
       <div
         class='flex flex-col mb-4 gap-4 md:gap-0 md:flex-row justify-between items-center md:mx-20 mx-0'
       >
